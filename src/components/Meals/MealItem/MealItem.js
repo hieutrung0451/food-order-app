@@ -4,12 +4,17 @@ import CartContext from "../../../store/cart-context";
 import classes from "./MealItem.module.css";
 
 const MealItem = (props) => {
-  const ctxCart = useContext(CartContext);
+  const cartCtx = useContext(CartContext);
 
   const formatPrice = `$ ${props.price.toFixed(2)}`;
 
-  const addMealHandler = () => {
-    ctxCart.addItem(props.meal);
+  const onAddToCartHandler = (amount) => {
+    cartCtx.addItem({
+      id: props.id,
+      name: props.name,
+      amount: amount,
+      price: props.price,
+    });
   };
 
   return (
@@ -20,7 +25,7 @@ const MealItem = (props) => {
         <div className={classes.price}>{formatPrice}</div>
       </div>
       <div>
-        <MealItemForm id={props.id} onSubmit={addMealHandler} />
+        <MealItemForm onAddToCart={onAddToCartHandler} />
       </div>
     </li>
   );
